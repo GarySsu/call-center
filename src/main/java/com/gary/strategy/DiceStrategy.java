@@ -1,5 +1,7 @@
 package com.gary.strategy;
 
+import com.gary.dice.Dice;
+
 /**
  * Models different strategies on which is dice play
  */
@@ -10,6 +12,6 @@ public interface DiceStrategy {
      *
      * @return
      */
-    public String roll();
+    public String roll(Dice d1, Dice d2);
 
 }

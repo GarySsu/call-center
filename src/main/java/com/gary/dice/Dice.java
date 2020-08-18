@@ -30,6 +30,9 @@ public class Dice implements Runnable {
                 e.printStackTrace();
             }
         }
+
+        logger.info("Dice " + Thread.currentThread().getName() + " get last upnum " + upnum);
+
     }
 
 }

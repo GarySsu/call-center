@@ -1,5 +1,7 @@
 package com.gary;
 
+import com.gary.dice.Dice;
+import com.gary.dice.DiceStatus;
 import com.gary.employee.Employee;
 import com.gary.employee.EmployeeStatus;
 import com.gary.employee.EmployeeType;
@@ -25,17 +27,26 @@ public class AttendStrategyImpl implements AttendStrategy {
         Optional<Employee> employee = availableEmployees.stream().filter(e -> e.getEmployeeType() == EmployeeType.FRESHER).findAny();
         if (!employee.isPresent()) {
             logger.info("No available fresher found");
-            employee = availableEmployees.stream().filter(e -> e.getEmployeeType() == EmployeeType.TECHNICAL).findAny();
-            if (!employee.isPresent()) {
-                logger.info("No available technical found");
-                employee = availableEmployees.stream().filter(e -> e.getEmployeeType() == EmployeeType.PRODUCT_MANAGER).findAny();
+
+            DiceStrategyImpl diceStrategy
+                     = new DiceStrategyImpl();
+            String result =  diceStrategy.roll(new Dice(),new Dice());
+            if(result.equals(DiceStatus.WIN.toString())){
+                logger.info("Roll the dice and win");
+                employee = availableEmployees.stream().filter(e -> e.getEmployeeType() == EmployeeType.TECHNICAL).findAny();
                 if (!employee.isPresent()) {
-                    logger.info("No available product manger found");
-                    return null;
+                    logger.info("No available technical found");
+                    employee = availableEmployees.stream().filter(e -> e.getEmployeeType() == EmployeeType.PRODUCT_MANAGER).findAny();
+                    if (!employee.isPresent()) {
+                        logger.info("No available product manger found");
+                    }
                 }
+                logger.info("Employee of type " + employee.get().getEmployeeType() + " found");
             }
+
+            logger.info("Roll the dice and lose");
+            logger.info("Employee of type not found");
         }
-        logger.info("Employee of type " + employee.get().getEmployeeType() + " found");
         return employee.get();
     }
 

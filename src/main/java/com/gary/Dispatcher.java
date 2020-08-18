@@ -64,10 +64,18 @@ public class Dispatcher implements Runnable {
             if (this.incomingCalls.isEmpty()) {
                 continue;
             } else {
-                Employee employee = this.attendStrategy.findEmployee(this.employees);
-                if (employee == null) {
-                    continue;
+
+                Employee employee = null;
+                try{
+                     employee = this.attendStrategy.findEmployee(this.employees);
+                    if (employee == null) {
+                        continue;
+                    }
+                }catch (Exception e){
+                    logger.error(e.getMessage());
+                    logger.error("not mapping with employee ");
                 }
+
                 Call call = this.incomingCalls.poll();
                 try {
                     employee.attend(call);
