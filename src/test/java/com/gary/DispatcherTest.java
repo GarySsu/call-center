@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -22,16 +23,6 @@ public class DispatcherTest {
     private static final int TOTAL_AMOUNT = 10;
     private static final int MIN_DURATION = 5;
     private static final int MAX_DURATION = 10;
-
-    @Test(expected = NullPointerException.class)
-    public void testDispatcherCreationWithNullEmployees() {
-        new Dispatcher(null);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testDispatcherCreationWithNullStrategy() {
-        new Dispatcher(new ArrayList<>(), null);
-    }
 
     @Test
     public void testDispatchCallsToEmployees() throws InterruptedException {
